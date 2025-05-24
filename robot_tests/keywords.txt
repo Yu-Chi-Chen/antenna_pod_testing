@@ -1,0 +1,35 @@
+*** Settings ***
+Library    AppiumLibrary
+
+*** Keywords ***
+Go To Subscription Page
+    Click element  id=de.danoeh.antennapod:id/bottom_navigation_subscriptions
+
+Subscribe Podcast By Index
+    [Arguments]    ${index}
+    ${podcastGridElement}=    Get WebElements    xpath=//android.widget.GridView[@resource-id="de.danoeh.antennapod:id/discover_grid"]
+    ${suscribeButton}=    Set Variable    xpath=//android.widget.Button[@text='Subscribe']
+    Click Element    ${podcastGridElement}[${index}]
+    Wait Until Element Is Visible    ${suscribeButton}
+    Click Element    ${suscribeButton}
+
+Add Podcast Channel
+    Go To Subscription Page
+    Click Element    id=de.danoeh.antennapod:id/subscriptions_add
+    Subscribe Podcast By Index    0
+
+Get Podcast Name
+    [Arguments]    ${podcastIndex}
+    ${podcastElement}=    Get WebElements    xpath=(//android.widget.LinearLayout[@resource-id="de.danoeh.antennapod:id/container"])[${podcastIndex}]
+    ${podcastName}=    Get Text    ${podcastElement}[${podcastIndex}]
+    Log To Console    Podcast Name: ${podcastName}
+    [Return]    ${podcastName}
+
+Download Podcasts
+    [Arguments]    ${episodeIndex}
+    # ${episodeList}=    Get WebElements    xpath=//androidx.recyclerview.widget.RecyclerView[@resource-id="de.danoeh.antennapod:id/recyclerView"]/android.widget.FrameLayout
+    ${episode}=    Get WebElements    xpath=//androidx.recyclerview.widget.RecyclerView[@resource-id="de.danoeh.antennapod:id/recyclerView"]/android.widget.FrameLayout[${episodeIndex}]
+    ${downloadButton}=    Set Variable    xpath=.//android.widget.FrameLayout[@content-desc="Download"]
+    ${episodeName}=    Get Webelement    xpath=.//android.widget.TextView
+    Click Element    ${downloadButton}
+    [Return]    ${episodeName}
