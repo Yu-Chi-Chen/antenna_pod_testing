@@ -22,6 +22,6 @@ Filter Downloaded Podcasts
     [Setup]    Open Application    ${REMOTE_URL}    platformName=${PLATFORM_NAME}    platformVersion=${PLATFORM_VERSION}    deviceName=${DEVICE_NAME}    appPackage=${APP_PACKAGE}    appActivity=${APP_ACTIVITY}    automationName=${AUTOMATION_NAME}
     Add Podcast Channel
     ${episodeName}=    Download Podcasts    1
-    Log To Console    Episode Name: ${episodeName}
-    Sleep    10s
+    Log To Console    \n Episode Name: ${episodeName}
+    #Sleep    10s
     # [Teardown]    Close Application
