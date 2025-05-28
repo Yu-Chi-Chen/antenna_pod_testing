@@ -42,5 +42,5 @@ appium inspector setting:
   "appium:appPackage": "de.danoeh.antennapod",
   "appium:appActivity": "de.danoeh.antennapod.activity.SplashActivity",
   "appium:fullReset": "true",
-  "appium:app": "C:\Users\Yuki\Documents\git\antenna_pod_testing\antennapod.apk"
+  "appium:app": "C:/Users/Yuki/Documents/git/antenna_pod_testing/antennapod.apk"
 }`

@@ -7,31 +7,68 @@ Go To Subscription Page
 
 Subscribe Podcast By Index
     [Arguments]    ${index}
-    ${podcastGridElement}=    Get WebElements    xpath=//android.widget.GridView[@resource-id="de.danoeh.antennapod:id/discover_grid"]
-    ${suscribeButton}=    Set Variable    xpath=//android.widget.Button[@text='Subscribe']
-    Click Element    ${podcastGridElement}[${index}]
-    Wait Until Element Is Visible    ${suscribeButton}
+    ${podcastGridElement}=    Set Variable    xpath=//android.widget.GridView[@resource-id="de.danoeh.antennapod:id/discover_grid"]/android.widget.LinearLayout[${index}]
+    ${suscribeButton}=    Set Variable    xpath=//android.widget.Button[@resource-id="de.danoeh.antennapod:id/butSubscribe"]
+    Click Element    ${podcastGridElement}
+    Wait Until Element Is Visible    ${suscribeButton}    timeout=10s
     Click Element    ${suscribeButton}
 
 Add Podcast Channel
     Go To Subscription Page
     Click Element    id=de.danoeh.antennapod:id/subscriptions_add
-    Subscribe Podcast By Index    0
+    Subscribe Podcast By Index    1
 
-Get Podcast Name
-    [Arguments]    ${podcastIndex}
-    ${podcastElement}=    Get WebElements    xpath=(//android.widget.LinearLayout[@resource-id="de.danoeh.antennapod:id/container"])[${podcastIndex}]
-    ${podcastName}=    Get Text    ${podcastElement}[${podcastIndex}]
-    Log To Console    Podcast Name: ${podcastName}
-    [Return]    ${podcastName}
-
-
-Download Podcasts
+Play And Pause Podcast
     [Arguments]    ${episodeIndex}
-    ${downloadButton}=    Set Variable    xpath=(//android.widget.FrameLayout[@content-desc="Download"])[${episodeIndex}]
-    Wait Until Element Is Visible   ${downloadButton}   5s
-    Click Element    ${downloadButton}
-    ${episodeTextIndex}=    Evaluate    ${episodeIndex}+1
-    ${episodeName}=    Get Text    xpath=(//android.widget.TextView[@resource-id="de.danoeh.antennapod:id/txtvTitle"])[${episodeTextIndex}] 
-    [Return]    ${episodeName}
-    
+    ${episode}=    Set Variable    xpath=(//android.widget.LinearLayout[@resource-id="de.danoeh.antennapod:id/container"])[${episodeIndex}]
+    Wait Until Element Is Visible    ${episode}    timeout=5s
+    ${episodeTitle}=    Get Text    ${episode}/android.widget.LinearLayout[2]//android.widget.TextView[@resource-id="de.danoeh.antennapod:id/txtvTitle"]
+    Click Element    ${episode}
+    ${buttonAction}=    Set Variable    xpath=//android.widget.LinearLayout[@resource-id="de.danoeh.antennapod:id/butAction1"]
+    Wait Until Element Is Visible   ${buttonAction}   5s
+    Click Element    ${buttonAction}
+    ${audioPlayer}=    Set Variable    xpath=//android.widget.FrameLayout[@resource-id="de.danoeh.antennapod:id/audioplayerFragment"]
+    Wait Until Element Is Visible    ${audioPlayer}    10s
+    Sleep    5s
+    Click Element    ${buttonAction}
+    ${backButton}=    Set Variable    xpath=//android.widget.ImageButton[@content-desc="Back"]
+    Click Element    ${backButton}
+    [Return]    ${episodeTitle}
+
+Filter Paused Podcast
+    ${filterButton}=    Set Variable    id=de.danoeh.antennapod:id/butFilter
+    ${filterMenu}=    Set Variable    id=de.danoeh.antennapod:id/filter_rows
+    ${pausedFilterButton}=    Set Variable    xpath=//android.widget.CompoundButton[@resource-id="de.danoeh.antennapod:id/filterButton1" and @text="Paused"]
+    ${confirmButton}=    Set Variable    id=de.danoeh.antennapod:id/confirmFiltermenu
+    Wait Until Element Is Visible    ${filterButton}
+    Click Element    ${filterButton}
+    Wait Until Element Is Visible    ${filterMenu}    timeout=3s
+    Click Element    ${pausedFilterButton}
+    Click Element    ${confirmButton}
+
+Podcast Should Be Visible
+    [Arguments]    ${episodeTitle}
+    ${podcastElement}=    Set Variable    xpath=//android.widget.LinearLayout[@resource-id="de.danoeh.antennapod:id/container"]//android.widget.LinearLayout//android.widget.TextView[@text="${episodeTitle}"]
+    Wait Until Element Is Visible    ${podcastElement}    timeout=5s
+
+Filterd Message Should Be Visible
+    ${filterMessage}=    Set Variable    xpath=//android.widget.TextView[@text="Filtered"]
+    Wait Until Element Is Visible    ${filterMessage}    timeout=5s
+
+Verify Filter Is Applied
+    [Arguments]    ${episodeTitle}
+    Podcast Should Be Visible    ${episodeTitle}
+    Filterd Message Should Be Visible
+
+Clear Filter And Close Application
+    ${filterButton}=    Set Variable    id=de.danoeh.antennapod:id/butFilter
+    ${filterMenu}=    Set Variable    id=de.danoeh.antennapod:id/filter_rows
+    ${confirmButton}=    Set Variable    id=de.danoeh.antennapod:id/confirmFiltermenu
+    ${resetButton}=    Set Variable    id=de.danoeh.antennapod:id/resetFiltermenu
+    ${home}=    Set Variable    id=de.danoeh.antennapod:id/bottom_navigation_home
+    Click Element    ${filterButton}
+    Wait Until Element Is Visible    ${filterMenu}    timeout=3s
+    Click Element    ${resetButton}
+    Click Element    ${confirmButton}
+    Click Element    ${home}
+    Close Application
