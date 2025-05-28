@@ -22,10 +22,25 @@
 `adb devices`
 
 appium inspector setting:
+
+# 實體機器
+
 `{
   "platformName": "Android",
   "appium:automationName": "UiAutomator2",
   "appium:deviceName": "Android",
   "appium:appPackage": "de.danoeh.antennapod",
   "appium:appActivity": "de.danoeh.antennapod.activity.SplashActivity"
+}`
+
+# Android Studio 虛擬機
+
+`{
+  "platformName": "Android",
+  "appium:automationName": "UiAutomator2",
+  "appium:deviceName": "Android",
+  "appium:appPackage": "de.danoeh.antennapod",
+  "appium:appActivity": "de.danoeh.antennapod.activity.SplashActivity",
+  "appium:fullReset": "true",
+  "appium:app": "C:\Users\Yuki\Documents\git\antenna_pod_testing\antennapod.apk"
 }`

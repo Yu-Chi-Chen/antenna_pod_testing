@@ -25,16 +25,13 @@ Get Podcast Name
     Log To Console    Podcast Name: ${podcastName}
     [Return]    ${podcastName}
 
-Get Page Source
-    ${xml}=    Get Source
-    Log    xml is ${xml}\n\n
 
 Download Podcasts
     [Arguments]    ${episodeIndex}
-    # ${episodeList}=    Get WebElements    xpath=//androidx.recyclerview.widget.RecyclerView[@resource-id="de.danoeh.antennapod:id/recyclerView"]/android.widget.FrameLayout
-    ${episode}=    Get WebElements    xpath=//androidx.recyclerview.widget.RecyclerView[@resource-id="de.danoeh.antennapod:id/recyclerView"]/android.widget.FrameLayout[${episodeIndex}]
-    ${downloadButton}=    Set Variable    xpath=.//android.widget.FrameLayout[@content-desc="Download"]
-    ${episodeName}=    Get Webelement    xpath=.//android.widget.TextView
+    ${downloadButton}=    Set Variable    xpath=(//android.widget.FrameLayout[@content-desc="Download"])[${episodeIndex}]
+    Wait Until Element Is Visible   ${downloadButton}   5s
     Click Element    ${downloadButton}
-    Get Page Source
+    ${episodeTextIndex}=    Evaluate    ${episodeIndex}+1
+    ${episodeName}=    Get Text    xpath=(//android.widget.TextView[@resource-id="de.danoeh.antennapod:id/txtvTitle"])[${episodeTextIndex}] 
     [Return]    ${episodeName}
+    
