@@ -3,3 +3,4 @@ Resource    common.txt
 Resource    TC-FP-01.txt
 Resource    TC-MC-06.txt
 Resource    TC-MC-07.txt
+Resource    TC-MC-08.txt

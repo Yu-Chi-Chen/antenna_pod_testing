@@ -82,11 +82,6 @@ Verify Skip To Next Podcast With Has Next Podcast Will Is Expected
     ${nextPodcastTitle}=    Set Variable    xpath=//android.widget.TextView[@resource-id="de.danoeh.antennapod:id/txtvEpisodeTitle" and @text= "${episodeTitleList}[1]"]
     Wait Until Page Contains Element    ${nextPodcastTitle}    10s
 
-Click Back Button In Podcast Page
-    ${backButton}=    Set Variable    xpath=//android.widget.FrameLayout[@resource-id= "de.danoeh.antennapod:id/main_content_view"]//android.view.ViewGroup[@resource-id= "de.danoeh.antennapod:id/toolbar"]//android.widget.ImageButton[@content-desc="Back"]
-    Wait Until Element Is Visible   ${backButton}   10s
-    Click Element    ${backButton}
-
 Click Back Button And Go To Home Page
     Click Back Button In Podcast Page
     Go To Home Page

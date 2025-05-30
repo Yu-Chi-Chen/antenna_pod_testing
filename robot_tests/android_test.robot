@@ -69,4 +69,7 @@ Adjust Podcast Speed
     ...                 AND    Play And Pause Podcast    1
     ...                 AND    Click Back Button In Podcast Information Page
     ...                 AND    Go To Home Page
-    Log    123
+    Set Podcast To Specific Speed
+    Verify Speed Is Adjusted
+    [Teardown]    Run Keywords    Click Back Button In Podcast Page
+    ...                    AND    Close Application
