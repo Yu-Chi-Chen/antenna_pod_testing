@@ -50,4 +50,4 @@ appium inspector setting:
 TC-MC-06 的 Activity Diagram 和 Test Case 執行 寫法不同。
 TC-MC-06 的撥放條本身好像不可拆分? 這樣 'Drag And Drop' 這個 keyword 不能用
 
-[Question] TC-MC-07-1 執行最後跳入 Home 頁面太快，有沒有需要停幾秒?
+[Question] TC-MC-07-1 執行最後跳入 Home 頁面太快，有沒有需要停幾秒? 有需要 Teardown 嗎?原本就會直接回到 Home Page
