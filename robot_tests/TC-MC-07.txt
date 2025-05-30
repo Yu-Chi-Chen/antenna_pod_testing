@@ -1,0 +1,20 @@
+*** Settings ***
+Library    AppiumLibrary
+Library    ../venv/Lib/site-packages/robot/libraries/XML.py
+Resource    common.txt
+
+*** Keywords ***
+Click To Skip Podcast
+    ${skipButton}=    Set Variable    id=de.danoeh.antennapod:id/butSkip
+    Wait Until Page Contains Element    ${skipButton}    10s
+    Click Element    ${skipButton}
+
+Home Button Should Not Be Clickable
+    ${homeButton}=    Set Variable    id=de.danoeh.antennapod:id/bottom_navigation_home
+    ${buttonAttribute}=    Get Element Attribute    ${homeButton}    clickable
+    Should Be Equal    ${buttonAttribute}    false
+
+Verify Skip To Next Podcast With Only One Podcast In Queue Will Back To Home Page
+    ${homeText}=    Set Variable    xpath=//android.view.ViewGroup[@resource-id="de.danoeh.antennapod:id/toolbar"]//android.widget.TextView[@text="Home"]
+    Wait Until Page Contains Element    ${homeText}    10s
+    Home Button Should Not Be Clickable

@@ -1,6 +1,6 @@
 *** Settings ***
 Library    AppiumLibrary
-Resource    keywords.txt
+Resource    allLocalKeywords.txt
 
 *** Variables ***
 ${REMOTE_URL}     http://localhost:4723/wd/hub
@@ -20,11 +20,46 @@ Open App
     Close Application
 
 Filter Paused Podcasts
-    [Tags]    UC-FP-01    subscription
-    [Setup]    Open Application    ${REMOTE_URL}    platformName=${PLATFORM_NAME}    platformVersion=${PLATFORM_VERSION}    deviceName=${DEVICE_NAME}    appPackage=${APP_PACKAGE}    appActivity=${APP_ACTIVITY}    automationName=${AUTOMATION_NAME}    fullReset=${FULL_RESET}    app=${APP}
-    Add Podcast Channel
-    ${episodeTitle}=    Play And Pause Podcast    1
+    [Tags]    TC-FP-01    subscription
+    [Setup]    Run Keywords    Open Application    ${REMOTE_URL}    platformName=${PLATFORM_NAME}    platformVersion=${PLATFORM_VERSION}    deviceName=${DEVICE_NAME}    appPackage=${APP_PACKAGE}    appActivity=${APP_ACTIVITY}    automationName=${AUTOMATION_NAME}    fullReset=${FULL_RESET}    app=${APP}
+    ...                 AND    Add Podcast To Subscriptions
+    ...                 AND    Play And Pause Podcast    1
     Filter Paused Podcast
-    Log    Epoisode Title is ${episodeTitle}
     Verify Filter Is Applied    ${episodeTitle}
     [Teardown]    Clear Filter And Close Application
+
+Fast Forward Podcast To Specific Time
+    [Tags]    TC-MC-06
+    [Setup]    Run Keywords    Open Application    ${REMOTE_URL}    platformName=${PLATFORM_NAME}    platformVersion=${PLATFORM_VERSION}    deviceName=${DEVICE_NAME}    appPackage=${APP_PACKAGE}    appActivity=${APP_ACTIVITY}    automationName=${AUTOMATION_NAME}    fullReset=${FULL_RESET}    app=${APP}
+    ...                 AND    Add Podcast To Subscriptions
+    ...                 AND    Play And Pause Podcast    1
+    ...                 AND    Go To Home Page
+    # There is a problem
+    Log    123
+
+Skip To Next Podcast In Queue With No Next Podcast
+    [Tags]    TC-MC-07
+    [Setup]    Run Keywords    Open Application    ${REMOTE_URL}    platformName=${PLATFORM_NAME}    platformVersion=${PLATFORM_VERSION}    deviceName=${DEVICE_NAME}    appPackage=${APP_PACKAGE}    appActivity=${APP_ACTIVITY}    automationName=${AUTOMATION_NAME}    fullReset=${FULL_RESET}    app=${APP}
+    ...                 AND    Add Podcast To Subscriptions
+    ...                 AND    Play And Pause Podcast    1
+    ...                 AND    Go To Home Page
+    Click Audio Player
+    Click To Skip Podcast
+    Verify Skip To Next Podcast With Only One Podcast In Queue Will Back To Home Page
+    [Teardown]    Close Application
+
+Skip To Next Podcast In Queue With Has Next Podcast
+    [Tags]    TC-MC-07
+    [Setup]    Run Keywords    Open Application    ${REMOTE_URL}    platformName=${PLATFORM_NAME}    platformVersion=${PLATFORM_VERSION}    deviceName=${DEVICE_NAME}    appPackage=${APP_PACKAGE}    appActivity=${APP_ACTIVITY}    automationName=${AUTOMATION_NAME}    fullReset=${FULL_RESET}    app=${APP}
+    ...                 AND    Add Podcast To Subscriptions
+    ...                 AND    Play And Pause Podcast    1
+    ...                 AND    Go To Home Page
+    Log    123
+
+Adjust Podcast Speed
+    [Tags]    TC-MC-08
+    [Setup]    Run Keywords    Open Application    ${REMOTE_URL}    platformName=${PLATFORM_NAME}    platformVersion=${PLATFORM_VERSION}    deviceName=${DEVICE_NAME}    appPackage=${APP_PACKAGE}    appActivity=${APP_ACTIVITY}    automationName=${AUTOMATION_NAME}    fullReset=${FULL_RESET}    app=${APP}
+    ...                 AND    Add Podcast To Subscriptions
+    ...                 AND    Play And Pause Podcast    1
+    ...                 AND    Go To Home Page
+    Log    123

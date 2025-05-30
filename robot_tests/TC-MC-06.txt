@@ -1,0 +1,11 @@
+*** Settings ***
+Library    AppiumLibrary
+Resource    common.txt
+
+*** Keywords ***
+Fast Forward Podcast To Specific Time
+    ${timePosition}=    Set Variable    id=de.danoeh.antennapod:id/txtvPosition
+    Wait Until Page Contains    ${timePosition}
+    ${timePositionText}=    Get Text    ${timePosition}
+    ${dragTarget}=    Set Variable    xpath=de.danoeh.antennapod:id/sbPosition
+    Drag And Drop    locator    target

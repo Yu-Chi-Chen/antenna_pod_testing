@@ -44,3 +44,7 @@ appium inspector setting:
   "appium:fullReset": "true",
   "appium:app": "C:/Users/Yuki/Documents/git/antenna_pod_testing/antennapod.apk"
 }`
+
+# Notes
+
+TC-MC-06 的 Activity Diagram 和 Test Case 執行 寫法不同。
