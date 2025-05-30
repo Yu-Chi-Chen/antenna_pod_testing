@@ -23,22 +23,30 @@ Add Podcast To Subscriptions
     Click Element    id=de.danoeh.antennapod:id/subscriptions_add
     Subscribe Podcast By Index    1
 
+Click Button Action In Podcast Information Page
+    ${buttonAction}=    Set Variable    xpath=//android.widget.LinearLayout[@resource-id="de.danoeh.antennapod:id/butAction1"]
+    Wait Until Element Is Visible   ${buttonAction}   5s
+    Click Element    ${buttonAction}
+
+Audio Player Should Be Visible
+    ${audioPlayer}=    Set Variable    xpath=//android.widget.LinearLayout[@resource-id="de.danoeh.antennapod:id/fragmentLayout"]
+    Wait Until Element Is Visible    ${audioPlayer}    10s
+
 Play And Pause Podcast
-    [Arguments]    ${episodeIndex}
+    [Arguments]    ${episodeIndex}    ${isNeedTitle}=${False}
     ${episode}=    Set Variable    xpath=(//android.widget.LinearLayout[@resource-id="de.danoeh.antennapod:id/container"])[${episodeIndex}]
     Wait Until Element Is Visible    ${episode}    timeout=5s
     ${title}=    Get Text    ${episode}/android.widget.LinearLayout[2]//android.widget.TextView[@resource-id="de.danoeh.antennapod:id/txtvTitle"]
     Click Element    ${episode}
-    ${buttonAction}=    Set Variable    xpath=//android.widget.LinearLayout[@resource-id="de.danoeh.antennapod:id/butAction1"]
-    Wait Until Element Is Visible   ${buttonAction}   5s
-    Click Element    ${buttonAction}
-    ${audioPlayer}=    Set Variable    xpath=//android.widget.LinearLayout[@resource-id="de.danoeh.antennapod:id/fragmentLayout"]
-    Wait Until Element Is Visible    ${audioPlayer}    10s
+    Click Button Action In Podcast Information Page
+    Audio Player Should Be Visible
     Sleep    5s
-    Click Element    ${buttonAction}
+    Click Button Action In Podcast Information Page
+    Run Keyword If    ${isNeedTitle}    Set Test Variable    ${episodeTitle}    ${title}
+
+Click Back Button In Podcast Page
     ${backButton}=    Set Variable    xpath=//android.widget.ImageButton[@content-desc="Back"]
     Click Element    ${backButton}
-    Set Test Variable    ${episodeTitle}    ${title}
 
 Click Audio Player
     ${audioPlayer}=    Set Variable    xpath=//android.widget.LinearLayout[@resource-id="de.danoeh.antennapod:id/fragmentLayout"]

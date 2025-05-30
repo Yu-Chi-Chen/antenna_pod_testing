@@ -18,3 +18,11 @@ Verify Skip To Next Podcast With Only One Podcast In Queue Will Back To Home Pag
     ${homeText}=    Set Variable    xpath=//android.view.ViewGroup[@resource-id="de.danoeh.antennapod:id/toolbar"]//android.widget.TextView[@text="Home"]
     Wait Until Page Contains Element    ${homeText}    10s
     Home Button Should Not Be Clickable
+
+Play And Pause Podcasts
+    [Arguments]    ${episodeIndexList}
+    FOR    ${index}    IN    @{episodeIndexList}
+        Play And Pause Podcast    ${index}
+    END
+    Click Back Button In Podcast Page
+   
