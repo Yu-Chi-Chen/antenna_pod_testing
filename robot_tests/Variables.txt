@@ -1,0 +1,3 @@
+*** Variables ***
+@{episodeTitleList}
+@{toPlayList}=  1   2

@@ -1,6 +1,7 @@
 *** Settings ***
 Library    AppiumLibrary
 Resource    allLocalKeywords.txt
+Resource    Variables.txt
 
 *** Variables ***
 ${REMOTE_URL}     http://localhost:4723/wd/hub
@@ -26,7 +27,7 @@ Filter Paused Podcasts
     ...                 AND    Play And Pause Podcast    1    isNeedTitle=True
     ...                 AND    Click Back Button In Podcast Page
     Filter Paused Podcast
-    Verify Filter Is Applied    ${episodeTitle}
+    Verify Filter Is Applied    ${episodeTitleList}[0]
     [Teardown]    Clear Filter And Close Application
 
 Fast Forward Podcast To Specific Time
@@ -55,9 +56,9 @@ Skip To Next Podcast In Queue With Has Next Podcast
     [Tags]    TC-MC-07
     [Setup]    Run Keywords    Open Application    ${REMOTE_URL}    platformName=${PLATFORM_NAME}    platformVersion=${PLATFORM_VERSION}    deviceName=${DEVICE_NAME}    appPackage=${APP_PACKAGE}    appActivity=${APP_ACTIVITY}    automationName=${AUTOMATION_NAME}    fullReset=${FULL_RESET}    app=${APP}
     ...                 AND    Add Podcast To Subscriptions
-    ...                 AND    Play And Pause Podcast    1
-    ...                 AND    Click Back Button In Podcast Page
+    ...                 AND    Play And Pause Podcasts    ${toPlayList}
     ...                 AND    Go To Home Page
+    Log    ${episodeTitleList}
     Log    123
 
 Adjust Podcast Speed
